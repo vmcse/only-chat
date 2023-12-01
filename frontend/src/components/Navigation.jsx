@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-import ChatIcon from "@mui/icons-material/Chat";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const Navigation = () => {
   return (
@@ -12,7 +12,7 @@ const Navigation = () => {
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
-            <ChatIcon style={{ width: 50, height: 50 }} />
+            <WhatsAppIcon style={{ width: 50, height: 50 }} />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

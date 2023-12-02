@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
@@ -7,9 +7,29 @@ import "./Signup.css";
 import pic from "../assets/default_profile_pic.jpg";
 import AddIcon from "@mui/icons-material/Add";
 
-const validateImg = () => {};
-
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const [image, setImage] = useState(null);
+  const [uploadingImg, setUploadingImg] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const validateImg = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 1048576) {
+      return alert("Max file size is 1MB");
+    } else {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Container>
       <Row>
@@ -17,10 +37,10 @@ const Signup = () => {
           md={7}
           className="d-flex align-items-center justify-content-center flex-direction-column"
         >
-          <Form style={{ width: "80%", maxWidth: 500 }}>
+          <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleSignup}>
             <h1 className="text-center">Create Account</h1>
             <div className="signup-profile-pic__container">
-              <img src={pic} className="signup-profile-pic" />
+              <img src={imagePreview || pic} className="signup-profile-pic" />
               <label htmlFor="image-upload" className="image-upload-label">
                 <AddIcon className="add-pic-icon" />
               </label>
@@ -34,14 +54,22 @@ const Signup = () => {
             </div>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Your name" />
+              <Form.Control
+                type="text"
+                placeholder="Your name"
+                onChange={(e) => setName(e.target.value)}
+              />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
@@ -49,7 +77,11 @@ const Signup = () => {
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Create Account

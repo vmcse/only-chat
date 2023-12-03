@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const userRouter = require("./controllers/userRouter");
 
 const rooms = ["general", "tech", "finance", "crypto"];
 const cors = require("cors");
@@ -7,6 +8,9 @@ const cors = require("cors");
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
+app.use("/users", userRouter);
+
+require("./connection");
 
 const server = require("http").createServer(app);
 const PORT = 5001;

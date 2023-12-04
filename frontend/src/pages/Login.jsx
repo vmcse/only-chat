@@ -2,15 +2,23 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useLoginUserMutation } from "../services/appApi";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [loginUser, { isLoading, eror }] = useLoginUserMutation();
 
   const handleLogin = (e) => {
     e.preventDefault();
+    loginUser({ email, password }).then(({ data }) => {
+      if (data) {
+        navigate("/chat");
+      }
+    });
   };
   return (
     <Container>

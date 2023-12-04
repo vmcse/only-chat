@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useSignupUserMutation } from "../services/appApi";
 import "./Signup.css";
 import pic from "../assets/default_profile_pic.jpg";
 import AddIcon from "@mui/icons-material/Add";
@@ -11,11 +12,11 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
+  const [signupUser, { isLoading, error }] = useSignupUserMutation();
   const [image, setImage] = useState(null);
   const [uploadingImg, setUploadingImg] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-
+  const navigate = useNavigate();
   const validateImg = (e) => {
     const file = e.target.files[0];
     if (file.size > 1048576) {
@@ -56,6 +57,12 @@ const Signup = () => {
 
     const url = await uploadImage(image);
     console.log(url);
+    signupUser({ name, email, password, picture: url }).then(({ data }) => {
+      if (data) {
+        console.log(data);
+        navigate("/chat");
+      }
+    });
   };
 
   return (

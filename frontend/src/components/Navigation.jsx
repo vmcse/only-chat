@@ -3,17 +3,21 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useLogoutUserMutation } from "../services/appApi";
 import { LinkContainer } from "react-router-bootstrap";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
-
-  const handleLogout = (e) => {
+  const [logoutUser] = useLogoutUserMutation();
+  const navigate = useNavigate();
+  const handleLogout = async (e) => {
     e.preventDefault();
+    await logoutUser(user);
+    navigate("/");
   };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">

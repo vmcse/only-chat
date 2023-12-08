@@ -67,7 +67,7 @@ const Navigation = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Button variant="danger" onChange={handleLogout}>
+                  <Button variant="danger" onClick={handleLogout}>
                     Logout
                   </Button>
                 </NavDropdown.Item>
